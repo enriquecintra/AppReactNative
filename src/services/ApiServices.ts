@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import AuthContext from "../contexts/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { HOSTWEBAPI10, HOSTWEBAPI } from '@env'
+import { HOSTWEBAPI } from '@env'
 
 interface ApiResponse<T> {
 	data?: T,
@@ -36,7 +36,7 @@ class ApiServices {
 		//const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUb2tlbiI6ImU2ZTlmNzgxLWRlNGQtNDExMC1iZDQ4LWVjZjQ5OGM4ZDAxMCIsIlRva2VuQnJhbmEiOiJmbGF2aW8ubWVubmVsYUBsYXVzaXYuY29tLmJyIiwibmJmIjoxNjI4ODM1ODMzLCJleHAiOjE2Mjg4Mzc2MzMsImlhdCI6MTYyODgzNTgzM30.jM9tFeVNV5K6mEC9v2b3qSX5GZ16JKq0QK5VRIQXfbc";
 		const token = await AsyncStorage.getItem("Token");
 		//console.log("token =>", token);
-		//console.log("api =>", { HOSTWEBAPI10, HOSTWEBAPI });
+		console.log("api =>", { HOSTWEBAPI });
 		let requestHeaders = new Headers();
 		requestHeaders.set('Content-Type', 'application/json; charset=utf-8');
 		requestHeaders.set('Accept', '*/*');
@@ -81,6 +81,7 @@ class ApiServices {
 			throw new Error(resultErrorJson);
 		} catch (e) {
 			var resultError = { ok: false, error: e } as ApiResponse<T>;
+			console.log("resultError =>", resultError);
 			return resultError;
 		}
 	}
@@ -122,7 +123,7 @@ class ApiServices {
 	};
 };
 
-export const _apiwebService = new ApiServices(HOSTWEBAPI10);
+export const _apiwebService = new ApiServices(HOSTWEBAPI);
 
 export const NewGuid = function NewGuid() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
